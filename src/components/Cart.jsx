@@ -8,18 +8,39 @@ const Cart = () => {
   const { totalItemsInCart } = React.useContext(CartContext)
 
   const [cartOpen, setCartOpen] = React.useState(false)
+  const dropdownRef = React.useRef(null)
+
+  React.useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setCartOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []); //closes the menu when clicked out of 
 
   return (
-    <div className='ml-8 cursor-pointer relative'>
-      <div className='relative' onClick={() => setCartOpen(prev => !prev)}>
-        <ShoppingBagIcon className=' w-8 h-8'/>
-        <span className='text-xs 
-        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[20%]'>
-          {totalItemsInCart}
-        </span>
-        {cartOpen && <CartDropdown />}
+      <div ref={dropdownRef} className="ml-8 p-1 pb-2 rounded-full hover:bg-slate-200">
+          <div
+              
+              className="relative cursor-pointer"
+              onClick={() => setCartOpen((prev) => !prev)}
+          >
+              <ShoppingBagIcon className=" h-8 w-8" />
+              <span
+                  className="absolute 
+        left-1/2 top-1/2 -translate-x-1/2 -translate-y-[20%] text-xs"
+              >
+                  {totalItemsInCart}
+              </span>
+          </div>
+          {cartOpen && <CartDropdown setCartOpen={setCartOpen}/>}
       </div>
-    </div>
   )
 }
 

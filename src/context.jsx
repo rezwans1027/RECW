@@ -5,6 +5,8 @@ import {
 } from './utils/firebase/FirebaseUtil'
 import PRODUCTS from './shopData.json'
 
+
+
 export const UserContext = React.createContext()
 
 export const UserProvider = ({ children }) => {
@@ -23,6 +25,8 @@ export const UserProvider = ({ children }) => {
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
+
+
 export const ProductContext = React.createContext()
 
 export const ProductProvider = ({ children }) => {
@@ -31,6 +35,8 @@ export const ProductProvider = ({ children }) => {
 
     return <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
 }
+
+
 
 export const CartContext = React.createContext()
 
@@ -51,8 +57,32 @@ export const CartProvider = ({children}) => {
         setCartItems(newCartItems)
     }
 
-    const totalItemsInCart = cartItems.reduce((totalItems, currentItem) => totalItems += currentItem.quantity, 0)
+    const deleteItemFromCart = (id) => {
+        var newCartItems = cartItems.filter(item => item.id !== id)
+        setCartItems(newCartItems)
+    }
 
-    const value = { cartItems, setCartItems, addItemToCart, totalItemsInCart }
+    const incrementCartItem = (id) => {
+        var newCartItems = cartItems.map(item => (
+            item.id === id ? 
+            {...item, quantity: item.quantity + 1}
+            : item
+        ))
+        setCartItems(newCartItems)
+    }
+
+    const decrementCartItem = (id) => {
+        var newCartItems = cartItems.map(item => (
+            item.id === id ? 
+            item.quantity === 1 ? null : {...item, quantity: item.quantity - 1}
+            : item
+        )).filter(Boolean)
+        setCartItems(newCartItems)
+    }
+
+    const totalItemsInCart = cartItems.reduce((totalItems, currentItem) => totalItems += currentItem.quantity, 0)
+    const totalPriceInCart = cartItems.reduce((totalItems, currentItem) => totalItems += currentItem.quantity * currentItem.price, 0)
+
+    const value = { cartItems, setCartItems, addItemToCart, totalItemsInCart, deleteItemFromCart, incrementCartItem, decrementCartItem, totalPriceInCart }
     return <CartContext.Provider value={value} >{children}</CartContext.Provider>
 }

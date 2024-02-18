@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './routes/Layout'
 import SignIn from './routes/SignIn'
 import Shop from './routes/Shop'
+import Checkout from './routes/Checkout'
 
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='shop' element={<Shop />} />
         <Route path='sign-in' element={<SignIn />} />
+        <Route path='checkout' element={<Checkout />} />
       </Route>   
     </Routes>
   )

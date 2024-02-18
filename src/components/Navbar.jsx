@@ -41,10 +41,12 @@ const Navbar = () => {
             </div>
             <div
                 className="m-2 cursor-pointer rounded-full p-1 
-                hover:bg-slate-100 active:bg-slate-200 min-[481px]:hidden
+                hover:bg-slate-100 active:bg-slate-200 min-[481px]:hidden flex items-center
                 "
             >
-                <Bars3Icon className="h-8 w-8" onClick={() => setHam(true)} />
+                <Cart />
+                <Bars3Icon className="h-8 w-8 ml-4" onClick={() => setHam(true)} />
+                
                 {ham && (
                     <div
                         id="ham-menu"
