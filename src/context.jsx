@@ -5,7 +5,6 @@ import {
     addCollectionAndDocuments,
     getCategoriesAndDocuments
 } from './utils/firebase/FirebaseUtil'
-import PRODUCTS from './shopData.json'
 
 
 
