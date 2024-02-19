@@ -19,10 +19,13 @@ const Checkout = () => {
             <div className='mb-6'>
                 {cartItems.map((item) => (
                     <div className="flex items-center gap-2 border-b-2 border-black text-sm sm:text-lg">
+                        <div className='mb-4 mt-4 w-[20%]'>
                         <img
                             src={item.imageUrl}
-                            className="mb-4 mt-4 aspect-square w-[20%]"
+                            className="aspect-square object-cover"
                         />
+                        </div>
+                        
                         <div className="w-[20%]">{item.name}</div>
                         <div className="flex w-[20%] items-center pl-4 pr-1">
                             <button onClick={() => decrementCartItem(item.id)} className="text-2xl sm:text-5xl cursor-pointer">

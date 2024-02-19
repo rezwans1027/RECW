@@ -5,6 +5,7 @@ import Layout from './routes/Layout'
 import SignIn from './routes/SignIn'
 import Shop from './routes/Shop'
 import Checkout from './routes/Checkout'
+import Category from './routes/Category'
 
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
         <Route path='shop' element={<Shop />} />
+        <Route path='shop/:category' element={<Category />} />
         <Route path='sign-in' element={<SignIn />} />
         <Route path='checkout' element={<Checkout />} />
       </Route>   

@@ -1,13 +1,23 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, 
-    signInWithPopup, 
-    GoogleAuthProvider, 
+import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from 'firebase/auth'
-import { getFirestore, doc, setDoc, getDoc} from 'firebase/firestore'
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    collection,
+    writeBatch,
+    query, 
+    getDocs
+} from 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCVV2CsJ7mJehIs576YkuRMf_s92nyqw8w",
@@ -17,10 +27,39 @@ const firebaseConfig = {
     messagingSenderId: "639418889999",
     appId: "1:639418889999:web:9322d7dfab507c0d43307a",
     measurementId: "G-KY685E5SHL"
-}; 
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore() //gets firestore database
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey)
+    const batch = writeBatch(db)
+
+    objectsToAdd.forEach(object => {
+        const docRef = doc(collectionRef, object.title.toLowerCase())
+        batch.set(docRef, object)
+
+    });
+    await batch.commit();
+    console.log("batch commit done")
+}
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories')
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data()
+        acc[title.toLowerCase()] = items
+        return acc
+    }, {})
+    return categoryMap
+}
+
 
 const provider = new GoogleAuthProvider();
 
@@ -31,13 +70,11 @@ provider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 
-const db = getFirestore() //gets firestore database
-
 export const createUserDocumentFromAuth = async (userAuth, additionalInfo) => {
     const userDocRef = doc(db, 'users', userAuth.uid)
     const userSnapshot = await getDoc(userDocRef)
 
-    if(!userSnapshot.exists()) {
+    if (!userSnapshot.exists()) {
         const { displayName, email } = userAuth
         const createdAt = new Date();
 
@@ -51,7 +88,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo) => {
         } catch (error) {
             console.log('error creating user', error.message)
         }
-    } 
+    }
     return userDocRef
 }
 

@@ -5,7 +5,7 @@ const CartItem = ({cartItem}) => {
 
   return (
     <div className='flex mb-4 items-center'>
-        <img src={imageUrl} className='h-16 w-16 mr-4'/>
+        <img src={imageUrl} className='h-16 w-16 mr-4 object-cover aspect-square'/>
         <div className=''>
             <h1>{name}</h1>
             <span>{quantity} x ${price}</span>

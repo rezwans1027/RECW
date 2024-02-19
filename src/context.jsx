@@ -1,7 +1,9 @@
 import React from 'react'
 import {
     onAuthStateChangedListener,//subscribes to login stream and listens for login/logout
-    createUserDocumentFromAuth
+    createUserDocumentFromAuth, 
+    addCollectionAndDocuments,
+    getCategoriesAndDocuments
 } from './utils/firebase/FirebaseUtil'
 import PRODUCTS from './shopData.json'
 
@@ -17,7 +19,6 @@ export const UserProvider = ({ children }) => {
         const unsubscribe = onAuthStateChangedListener((user) => {//return user object 
             if(user) createUserDocumentFromAuth(user)//if user object is not null then create fb doc/return fb doc
             setCurrentUser(user)//user null will set user as null, else will set user
-        console.log(user)
         })
         return () => unsubscribe()//disconnect listener to prevent memory leaks
     }, [])
@@ -27,13 +28,23 @@ export const UserProvider = ({ children }) => {
 
 
 
-export const ProductContext = React.createContext()
 
-export const ProductProvider = ({ children }) => {
-    const [products, setProducts] = React.useState(PRODUCTS)
-    const value = { products, setProducts }
+export const CategoriesContext = React.createContext()
 
-    return <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
+export const CategoriesProvider = ({ children }) => {
+    const [categoriesMap, setCategoriesMap] = React.useState({})
+
+    React.useEffect(() => {
+        const getCategoriesMap = async () => {
+            const categoryMap = await getCategoriesAndDocuments()
+            setCategoriesMap(categoryMap)
+        }
+        getCategoriesMap()
+    },[])
+
+    const value = { categoriesMap } 
+
+    return <CategoriesContext.Provider value={value}>{children}</CategoriesContext.Provider>
 }
 
 
