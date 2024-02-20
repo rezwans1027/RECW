@@ -1,6 +1,6 @@
 import React from 'react'
 import { selectCartItems, selectCartTotal } from '../store/cart/CartSelector'
-import { deleteItemFromCart, incrementCartItem, decrementCartItem } from '../store/cart/CartActions'
+import { deleteItemFromCart, incrementCartItem, decrementCartItem } from '../store/cart/CartReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Checkout = () => {

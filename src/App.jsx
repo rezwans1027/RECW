@@ -11,8 +11,8 @@ import {
     createUserDocumentFromAuth,
     getCategoriesAndDocuments
 } from './utils/firebase/FirebaseUtil'
-import { setCurrentUser } from './store/user/UserActions'
-import { setCategories } from './store/categories/CategoriesActions'
+import { setCurrentUser } from './store/user/UserReducer'
+import { setCategories } from './store/categories/CategoriesReducer'
 import { useDispatch } from 'react-redux'
 
 const App = () => {
@@ -22,7 +22,8 @@ const App = () => {
         const unsubscribe = onAuthStateChangedListener((user) => {
             //return user object
             if (user) createUserDocumentFromAuth(user) //if user object is not null then create fb doc/return fb doc
-            dispatch(setCurrentUser(user)) //user null will set user as null, else will set user
+            const pickedUser = user && (({accessToken, email}) => ({accessToken, user}))(user)
+            dispatch(setCurrentUser(pickedUser)) //user null will set user as null, else will set user
         })
         return () => unsubscribe() //disconnect listener to prevent memory leaks
     }, [])

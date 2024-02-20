@@ -1,5 +1,5 @@
 import React from 'react'
-import { addItemToCart } from '../store/cart/CartActions'
+import { addItemToCart } from '../store/cart/CartReducer'
 import { useDispatch } from 'react-redux'
 
 const ProductCard = ({ product }) => {
