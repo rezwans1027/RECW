@@ -1,11 +1,12 @@
 import React from 'react'
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 import CartDropdown from './CartDropdown'
-import { CartContext } from '../context'
+import { useSelector } from 'react-redux'
+import { selectCartCount } from '../store/cart/CartSelector'
 
 const Cart = () => {
 
-  const { totalItemsInCart } = React.useContext(CartContext)
+  const totalItemsInCart = useSelector(selectCartCount)
 
   const [cartOpen, setCartOpen] = React.useState(false)
   const dropdownRef = React.useRef(null)

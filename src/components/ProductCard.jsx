@@ -1,9 +1,10 @@
 import React from 'react'
-import { CartContext } from '../context'
+import { addItemToCart } from '../store/cart/CartActions'
+import { useDispatch } from 'react-redux'
 
 const ProductCard = ({ product }) => {
     const { name, price, imageUrl } = product
-    const { addItemToCart } = React.useContext(CartContext)
+    const dispatch = useDispatch()
 
     return (
         <div className="mb-8 group">
@@ -14,7 +15,7 @@ const ProductCard = ({ product }) => {
                     alt={name}
                 />
                 <div className='hidden group-hover:flex z-10 w-full h-[30%] absolute bottom-0 justify-center items-center group'>
-                    <button onClick={() => addItemToCart(product)} className='bg-white p-1 w-[80%] h-[50%] text-center md:text-xl shadow-2xl'>Add To Cart</button>
+                    <button onClick={() => dispatch(addItemToCart(product))} className='bg-white p-1 w-[80%] h-[50%] text-center md:text-xl shadow-2xl'>Add To Cart</button>
                 </div>
             </div>
 

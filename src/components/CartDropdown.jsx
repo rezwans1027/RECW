@@ -1,12 +1,14 @@
 import React from 'react'
 import CartItem from './CartItem'
-import { CartContext } from '../context'
 import { useNavigate } from 'react-router-dom'
+import { selectCartItems, selectCartCount } from '../store/cart/CartSelector'
+import { useSelector } from 'react-redux'
 
 const CartDropdown = ({setCartOpen}) => {
     const navigate = useNavigate()
 
-    const { cartItems, totalItemsInCart } = React.useContext(CartContext)
+    const cartItems = useSelector(selectCartItems)
+    const totalItemsInCart = useSelector(selectCartCount)
 
     return (
         <div

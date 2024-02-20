@@ -1,8 +1,12 @@
 import React from 'react'
-import { CartContext } from '../context'
+import { selectCartItems, selectCartTotal } from '../store/cart/CartSelector'
+import { deleteItemFromCart, incrementCartItem, decrementCartItem } from '../store/cart/CartActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Checkout = () => {
-    const { cartItems, deleteItemFromCart, incrementCartItem, decrementCartItem, totalPriceInCart } = React.useContext(CartContext)
+    const cartItems = useSelector(selectCartItems)
+    const totalPriceInCart = useSelector(selectCartTotal)
+    const dispatch = useDispatch()
 
     return (
         <div className="m-auto mt-6 max-w-[1200px] text-xs p-2 min-[374px]:p-6 min-[400px]:text-sm sm:p-8">
@@ -28,20 +32,20 @@ const Checkout = () => {
                         
                         <div className="w-[20%]">{item.name}</div>
                         <div className="flex w-[20%] items-center pl-4 pr-1">
-                            <button onClick={() => decrementCartItem(item.id)} className="text-2xl sm:text-5xl cursor-pointer">
+                            <button onClick={() => dispatch(decrementCartItem(item))} className="text-2xl sm:text-5xl cursor-pointer">
                                 {'<'}
                             </button>
                             <div className="pt-1 sm:text-xl ">
                                 {item.quantity}
                             </div>
-                            <button onClick={() => incrementCartItem(item.id)} className="text-2xl sm:text-5xl cursor-pointer">
+                            <button onClick={() => dispatch(incrementCartItem(item))} className="text-2xl sm:text-5xl cursor-pointer">
                                 {'>'}
                             </button>
                         </div>
                         <div className="w-[20%] pl-2">
                             ${item.quantity * item.price}
                         </div>
-                        <div onClick={() => deleteItemFromCart(item.id)} className="cursor-pointer flex w-14 justify-center">X</div>
+                        <div onClick={() => dispatch(deleteItemFromCart(item))} className="cursor-pointer flex w-14 justify-center">X</div>
                     </div>
                 ))}
             </div>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { CategoriesContext } from '../context'
+import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
+import { selectCategoriesMap } from '../store/categories/CategoriesSelector'
 
 const Category = () => {
-    const { categoriesMap } = React.useContext(CategoriesContext)
+    const categoriesMap = useSelector(selectCategoriesMap)
     const { category } = useParams()
 
     return (

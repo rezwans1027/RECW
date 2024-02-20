@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
-import { UserContext } from '../context'
 import { signOutUser } from '../utils/firebase/FirebaseUtil'
 import Cart from './Cart'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
     const [ham, setHam] = React.useState(false)
-    const { currentUser } = React.useContext(UserContext)
+
+    const currentUser = useSelector((state) => state.user.currentUser)
 
     return (
         <div className=" mx-2 mt-4 flex items-center justify-between lg:mb-8">
@@ -19,14 +20,14 @@ const Navbar = () => {
 
             <div
                 id="nav-links"
-                className=" m-2 flex justify-between p-1 text-lg
-                max-[480px]:hidden md:text-xl items-center"
+                className=" m-2 flex items-center justify-between p-1
+                text-lg max-[480px]:hidden md:text-xl"
             >
                 <Link to="shop" className="ml-8">
                     Shop
                 </Link>
-                <Link to="shop" className="ml-8">
-                    Shop
+                <Link to="About" className="ml-8">
+                    About
                 </Link>
                 {currentUser ? (
                     <Link onClick={signOutUser} className="ml-8">
@@ -40,13 +41,16 @@ const Navbar = () => {
                 <Cart />
             </div>
             <div
-                className="m-2 cursor-pointer rounded-full p-1 
-                hover:bg-slate-100 active:bg-slate-200 min-[481px]:hidden flex items-center
+                className="m-2 flex cursor-pointer items-center 
+                rounded-full p-1 hover:bg-slate-100 active:bg-slate-200 min-[481px]:hidden
                 "
             >
                 <Cart />
-                <Bars3Icon className="h-8 w-8 ml-4" onClick={() => setHam(true)} />
-                
+                <Bars3Icon
+                    className="ml-4 h-8 w-8"
+                    onClick={() => setHam(true)}
+                />
+
                 {ham && (
                     <div
                         id="ham-menu"
@@ -76,7 +80,10 @@ const Navbar = () => {
                             {currentUser ? (
                                 <li className="mx-8 my-3">
                                     <Link
-                                        onClick={() => {setHam(false);signOutUser()}}
+                                        onClick={() => {
+                                            setHam(false)
+                                            signOutUser()
+                                        }}
                                         to="sign-in"
                                     >
                                         Sign Out
