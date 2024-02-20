@@ -24,12 +24,12 @@ const Cart = () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []); //closes the menu when clicked out of 
-
+  
   return (
-      <div ref={dropdownRef} className="ml-8 p-1 pb-2 rounded-full hover:bg-slate-200">
+      <div ref={dropdownRef} className="ml-8 p-1 pb-2 rounded-full ">
           <div
               
-              className="relative cursor-pointer"
+              className="relative cursor-pointer hover:bg-slate-200"
               onClick={() => setCartOpen((prev) => !prev)}
           >
               <ShoppingBagIcon className=" h-8 w-8" />

@@ -6,6 +6,7 @@ import SignIn from './routes/SignIn'
 import Shop from './routes/Shop'
 import Checkout from './routes/Checkout'
 import Category from './routes/Category'
+import Confirmation from './routes/Confirmation'
 import {
     onAuthStateChangedListener, //subscribes to login stream and listens for login/logout
     createUserDocumentFromAuth,
@@ -14,6 +15,7 @@ import {
 import { setCurrentUser } from './store/user/UserReducer'
 import { setCategories } from './store/categories/CategoriesReducer'
 import { useDispatch } from 'react-redux'
+import About from './routes/About'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -44,7 +46,9 @@ const App = () => {
                 <Route path="shop/:category" element={<Category />} />
                 <Route path="sign-in" element={<SignIn />} />
                 <Route path="checkout" element={<Checkout />} />
+                <Route path="about" element={<About />} />
             </Route>
+            <Route path="/confirmation" element={<Confirmation />} />
         </Routes>
     )
 }

@@ -5,7 +5,9 @@
 
 
 @layer components {
-  
+  .stripe-card-element {
+    @apply rounded-full
+  }
 }
 
 @layer utilities {
@@ -19,4 +21,8 @@
 
   * {
     font-family: "DM Sans";
+  }
+
+  .stripe-card-element iframe {
+    font-size: 30px;
   }

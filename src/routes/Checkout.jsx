@@ -2,6 +2,7 @@ import React from 'react'
 import { selectCartItems, selectCartTotal } from '../store/cart/CartSelector'
 import { deleteItemFromCart, incrementCartItem, decrementCartItem } from '../store/cart/CartReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import PaymentForm from '../components/PaymentForm'
 
 const Checkout = () => {
     const cartItems = useSelector(selectCartItems)
@@ -22,7 +23,7 @@ const Checkout = () => {
             </div>
             <div className='mb-6'>
                 {cartItems.map((item) => (
-                    <div className="flex items-center gap-2 border-b-2 border-black text-sm sm:text-lg">
+                    <div className="flex items-center gap-2 border-b-2 border-black text-sm sm:text-lg" key={item.name}>
                         <div className='mb-4 mt-4 w-[20%]'>
                         <img
                             src={item.imageUrl}
@@ -49,7 +50,8 @@ const Checkout = () => {
                     </div>
                 ))}
             </div>
-            <h1 className='text-xl sm:text-2xl text-right'>Total: ${totalPriceInCart}</h1>
+            <h1 className='text-xl sm:text-2xl text-right mb-16'>Total: ${totalPriceInCart}</h1>
+            <PaymentForm />
         </div>
     )
 }

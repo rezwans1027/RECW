@@ -23,18 +23,18 @@ const Navbar = () => {
                 className=" m-2 flex items-center justify-between p-1
                 text-lg max-[480px]:hidden md:text-xl"
             >
-                <Link to="shop" className="ml-8">
+                <Link to="shop" className="ml-8 hover:bg-slate-200 p-1">
                     Shop
                 </Link>
-                <Link to="About" className="ml-8">
+                <Link to="about" className="ml-8 hover:bg-slate-200 p-1">
                     About
                 </Link>
                 {currentUser ? (
-                    <Link onClick={signOutUser} className="ml-8">
+                    <Link onClick={signOutUser} className="ml-8 hover:bg-slate-200 p-1">
                         Sign Out
                     </Link>
                 ) : (
-                    <Link to="sign-in" className="ml-8">
+                    <Link to="sign-in" className="ml-8 hover:bg-slate-200 p-1">
                         Sign In
                     </Link>
                 )}
@@ -71,10 +71,10 @@ const Navbar = () => {
                             <li className="mx-8 my-3">
                                 <Link
                                     onClick={() => setHam(false)}
-                                    to="shop"
+                                    to="about"
                                     className=""
                                 >
-                                    Shop
+                                    About
                                 </Link>
                             </li>
                             {currentUser ? (

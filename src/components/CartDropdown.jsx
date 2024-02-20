@@ -26,7 +26,7 @@ const CartDropdown = ({setCartOpen}) => {
                     <div className="text-center">Your Cart Is Empty</div>
                 )}
             </div>
-            <button onClick={() => {navigate('/checkout');setCartOpen(false)}} className="tbb mt-4 bg-black text-white">Check Out</button>
+            <button onClick={() => {navigate('/checkout');setCartOpen(false)}} className="tbb mt-4 bg-black text-white hover:opacity-65">Check Out</button>
         </div>
     )
 }
